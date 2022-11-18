@@ -49,7 +49,9 @@
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
-void AnalogClock(int num);
+void clearAllClock();
+void clockDisplay(int hour, int min, int sec);
+void singleLedDisplay(int num);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -91,16 +93,25 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int hour = 0, min = 0, sec = 0;
   while (1)
   {
     /* USER CODE END WHILE */
-	  //EX6
+	  //ex10
+	  	  sec++;
 
-	  	  for(int i = 1; i <= 12; i++){
-	  		  AnalogClock(i);
-	  		  if(i >= 12) i = 0;
-	  		  HAL_Delay (1000);
+	  	  if(sec >= 60){
+	  		  sec = 0;
+	  		  min++;
 	  	  }
+	  	  if(min >= 60){
+	  		  hour++;
+	  		  min = 0;
+	  	  }
+	  	  if(hour >= 24) hour = 0;
+	  	  //display
+	  	  clockDisplay(hour, min, sec);
+	  	  HAL_Delay (20);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -172,191 +183,90 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void AnalogClock(int num){
+void clockDisplay(int hour, int min, int sec){
+	  int hourD, minD, secD;
+	  if(sec%5 >= 3){
+	  	  secD = sec/5+1;
+	  }
+	  else{
+          if(sec/5 == 0) secD = 12;
+  	      else secD = sec/5;
+	  }
+	  if(min%5 >= 3){
+		  minD = min/5+1;
+	  }
+	  else{
+  	      if(min/5 == 0) minD = 12;
+	 	  else minD = min/5;
+	  }
+	  if(hour%12 == 0){
+	  	  hourD = 12;
+	  }
+	  else hourD = hour%12;
+
+	  clearAllClock();
+	  singleLedDisplay(secD);
+	  singleLedDisplay(minD);
+	  singleLedDisplay(hourD);
+}
+
+void singleLedDisplay(int num){
 	switch(num){
 	case 1:
 		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 2:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 3:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 4:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 5:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 6:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 7:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 8:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 9:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 10:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 11:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_RESET );
-		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 		break;
 	case 12:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_RESET );
 		break;
 	default:
-		HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
-		HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
 		HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_RESET );
 		break;
 	}
+}
+
+void clearAllClock() {
+	HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
 }
 /* USER CODE END 4 */
 
