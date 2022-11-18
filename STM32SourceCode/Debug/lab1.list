@@ -117,7 +117,6 @@ int main(void)
  8000160:	607b      	str	r3, [r7, #4]
   while (1)
   {
-    /* USER CODE END WHILE */
 	  //ex1
 	  	  count++;
  8000162:	687b      	ldr	r3, [r7, #4]
