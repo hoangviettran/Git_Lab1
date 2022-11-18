@@ -50,6 +50,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 void AnalogClock(int num);
+void clearAllClock();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -172,6 +173,20 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void clearAllClock() {
+	HAL_GPIO_WritePin ( P1_GPIO_Port , P1_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P2_GPIO_Port , P2_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P3_GPIO_Port , P3_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P4_GPIO_Port , P4_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P5_GPIO_Port , P5_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P6_GPIO_Port , P6_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P7_GPIO_Port , P7_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P8_GPIO_Port , P8_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
+}
 void AnalogClock(int num){
 	switch(num){
 	case 1:

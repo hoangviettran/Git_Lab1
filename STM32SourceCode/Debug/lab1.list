@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00002feb  00000000  00000000  00020035  2**0
+ 12 .debug_info   00002ffd  00000000  00000000  00020035  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00000e87  00000000  00000000  00023020  2**0
+ 13 .debug_abbrev 00000e9f  00000000  00000000  00023032  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 000003d8  00000000  00000000  00023ea8  2**3
+ 14 .debug_aranges 000003e0  00000000  00000000  00023ed8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000350  00000000  00000000  00024280  2**3
+ 15 .debug_ranges 00000358  00000000  00000000  000242b8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001559e  00000000  00000000  000245d0  2**0
+ 16 .debug_macro  0001559e  00000000  00000000  00024610  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00004600  00000000  00000000  00039b6e  2**0
+ 17 .debug_line   00004623  00000000  00000000  00039bae  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    0007985d  00000000  00000000  0003e16e  2**0
+ 18 .debug_str    0007986b  00000000  00000000  0003e1d1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000b79cb  2**0
+ 19 .comment      00000053  00000000  00000000  000b7a3c  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000d5c  00000000  00000000  000b7a20  2**2
+ 20 .debug_frame  00000d78  00000000  00000000  000b7a90  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -297,8 +297,11 @@ static void MX_GPIO_Init(void)
  8000264:	40010800 	.word	0x40010800
 
 08000268 <AnalogClock>:
-
-/* USER CODE BEGIN 4 */
+	HAL_GPIO_WritePin ( P9_GPIO_Port , P9_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P10_GPIO_Port , P10_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P11_GPIO_Port , P11_Pin ,GPIO_PIN_SET );
+	HAL_GPIO_WritePin ( P12_GPIO_Port , P12_Pin ,GPIO_PIN_SET );
+}
 void AnalogClock(int num){
  8000268:	b580      	push	{r7, lr}
  800026a:	b082      	sub	sp, #8
